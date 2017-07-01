@@ -3,15 +3,6 @@ defmodule ScopedAssociations do
   Documentation for ScopedAssociations.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> ScopedAssociations.hello
-      :world
-
-  """
   defmacro __using__(options) do
     quote do
       import unquote(__MODULE__)
