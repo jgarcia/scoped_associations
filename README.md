@@ -75,7 +75,7 @@ that I will address in the near future as well as some improvements to the api.
 
 ## Todo
 
-- [ ] Add tests with ecto schemas
+- [x] Add tests with ecto schemas
 - [ ] Remove code duplication in favor of reusable functions to reduce the number functions defined by the macro
 - [ ] Figure out some edge cases
 - [ ] Publish in hex
