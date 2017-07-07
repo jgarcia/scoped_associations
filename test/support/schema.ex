@@ -15,6 +15,8 @@ defmodule ScopedAssociations.Test.Post do
 
   has_one_scoped :first_comment, schema: Comment, foreign_key: "post_id", scope: :first_comment
   has_many_scoped :recent_comments, schema: Comment, foreign_key: "post_id", scope: :recent_comments
+  has_scoped_count :anonymous_comments_count, schema: Comment, foreign_key: "post_id", scope: :anonymous_comments
+
 
   def first_comment do
     from c in Comment,
@@ -27,6 +29,11 @@ defmodule ScopedAssociations.Test.Post do
       order_by: [asc: c.inserted_at]
   end
 
+  def anonymous_comments do
+    from c in Comment,
+      where: is_nil(c.email)
+  end
+
   def changeset(%Post{} = post, attrs) do
     post
     |> cast(attrs, [:title, :body])
@@ -37,8 +44,7 @@ end
 defmodule ScopedAssociations.Test.Comment do
   use Ecto.Schema
   import Ecto.Changeset
-  import Ecto.Query
-  alias ScopedAssociations.Test.{Post, Comment}
+  alias ScopedAssociations.Test.Comment
 
   schema "comments" do
     field :email, :string
@@ -51,6 +57,6 @@ defmodule ScopedAssociations.Test.Comment do
   def changeset(%Comment{} = comment, attrs) do
     comment
     |> cast(attrs, [:email, :body, :post_id])
-    |> validate_required([:email, :body, :post_id])
+    |> validate_required([:body, :post_id])
   end
 end

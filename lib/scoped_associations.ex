@@ -8,6 +8,7 @@ defmodule ScopedAssociations do
       import unquote(__MODULE__)
       import ScopedAssociations.HasMany
       import ScopedAssociations.HasOne
+      import ScopedAssociations.Count
       @repo unquote(options)[:repo]
 
       def include(source, associations) do
