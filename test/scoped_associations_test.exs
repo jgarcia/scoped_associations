@@ -17,6 +17,8 @@ defmodule ScopedAssociationsTest do
     create(:comment, %{email: "t3@user.com", body: "Body 3", post_id: post.id})
     create(:comment, %{email: "t4@user.com", body: "Body 4", post_id: post.id})
     create(:comment, %{email: "t5@user.com", body: "Body 5", post_id: post.id})
+    create(:comment, %{body: "Body 5", post_id: post.id})
+    create(:comment, %{body: "Body 5", post_id: post.id})
     :ok
   end
 
@@ -39,5 +41,13 @@ defmodule ScopedAssociationsTest do
 
     assert post.first_comment != nil
     assert post.recent_comments != nil
+  end
+
+  test "can load scoped counts" do
+    post = Repo.all(Post)
+           |> Post.include([:anonymous_comments_count])
+           |> Enum.at(0)
+
+    assert post.anonymous_comments_count == 2
   end
 end
